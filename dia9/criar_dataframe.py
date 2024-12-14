@@ -9,7 +9,7 @@ media = df['vendas'].mean() #media
 mediana = df['vendas'].median() #mediana
 desvio_padrao = df['vendas'].std() #desvio padrão
 maximo = df['vendas'].max() #maior valor
-minimo = df['vendas' ].min() #menor valor
+minimo = df['vendas'].min() #menor valor
 
 #resultados
 print("Media: ", media)
