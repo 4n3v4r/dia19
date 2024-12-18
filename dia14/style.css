@@ -1,0 +1,113 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body[data-theme="light"] {
+    --cor1: rgb(226, 215, 10);
+    --cor2: rgb(125, 14, 14);
+    --cor3: white;
+    --cor4: rgba(57, 219, 219, 0.927);
+}    
+
+body[data-theme="dark"] {
+    --cor1: rgb(50, 197, 197);
+    --cor2: rgb(20, 14, 14);
+    --cor3: grey;
+    --cor4: rgb(85, 90, 85);
+}
+
+section {
+    background-color:var(--cor1);
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    width: 95%;
+    margin: 0 auto;
+    height: 500px;
+    background-color: var(--cor4);
+    padding: 20px;
+    border-radius: 8px;
+}
+
+h1 {
+    font-size: 30px;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+p {
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    line-height: 25px;
+}
+
+ button {
+    background-color: var(--cor2);
+    padding: 10px 30px;
+    border: none;
+    font-size: 24px;
+    text-transform: uppercase;
+    color: var(--cor3);
+    border-radius: 6px;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+.theme-switcher {
+    position: absolute;
+    right: 30px;
+    top: 10px;
+}
+
+imput {
+    width: 0;
+    height: 0;
+    display: none;
+    visibility: hidden;
+}
+
+label {
+    cursor: pointer;
+    display: block;
+    text-indent: -9999px;
+    height: 30px;
+    width: 60px;
+    background-color: rgb(red, green, blue);
+    transition: 0.5 ease background-color;
+}
+
+label::after {
+    position: absolute;
+    content: "";
+    width: 20px;
+    height: 20px;
+    border-radius: 50px;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    background-color: rgb(46, 42, 68);
+    transition: 0.5 ease;
+}
+
+input:checked + label::after {
+    left: calc(100% - 2.5px);
+    background-color: aliceblue;
+}
+
+imput:checked + label {
+    background-color: rgb(25, 26, 37);
+    border: 2px solid whitesmoke;
+}
