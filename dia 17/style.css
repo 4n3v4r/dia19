@@ -71,7 +71,7 @@ body {
 
 .password {
     height: 60px;
-    background-color: rgba(6, 6, 6, 0.4);
+    background-color: rgba(15, 14, 14, 0.4);
     border-radius: 4px;
     display: flex;
     justify-content: center;
