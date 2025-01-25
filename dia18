@@ -1,0 +1,31 @@
+#imc - calculador de indice de massa corporal
+
+a = float (input("digita a altura em cm: "))
+b = float (input("digita o peso: "))
+sexo = input("digita o sexo (M ou F): ")
+
+imc = b / ((a / 100)* (a / 100))
+
+pcim = 52 + (0.75 * (a - 152.4))
+pcif = 52 + (0.67 * (a - 152.4))
+
+
+if imc < 18.5:
+    print("Está abaixo do peso.")
+
+elif imc >= 18.5 and imc <= 24.99:
+    print("O seu peso é normal.")
+
+elif imc >= 25 and imc <= 29.9:
+    print("Está acima do peso, pré-obesidade.")
+
+elif imc >= 30:
+    print("Esta muito acima do peso, obesidade.")
+
+else:
+    print("Erro")
+
+if sexo == "M":
+    print("O seu peso ideal seria de: ", round(pcim, 2))
+elif sexo == "F":
+    print("O seu peso ideal seria de: ", round(pcif, 2))
