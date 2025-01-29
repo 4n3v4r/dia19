@@ -10,7 +10,7 @@ from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.platypus import SimpleDocTemplate, Image 
 #browser
 import webbrowser
-from PIL import ImageTk , Image
+
 
 janela = Tk()
 
@@ -18,8 +18,7 @@ janela = Tk()
 
 class Relatorios():
     def printCliente(self):
-        webbrowser.open("relatorios/clientes.pdf")
-
+        webbrowser.open("clientes.pdf")
     def gerar_relatorioCliente(self):
         self.clt = canvas.Canvas("clientes.pdf")
 
@@ -28,11 +27,11 @@ class Relatorios():
         self.telefoneRel = self.telefone_entry.get()
         self.moradaRel = self.morada_entry.get()
 
-        #titulo
+#titulo
         self.clt.setFont("Helvetica-Bold", 24)
         self.clt.drawString(150, 750, "RELATORIO DE CLIENTES")
 
-        #corpo
+#corpo
         self.clt.setFont("Helvetica-Bold", 12)
         self.clt.drawString(50, 700, "Codigo: " )
         self.clt.drawString(50, 680, "Nome: " )
@@ -45,9 +44,14 @@ class Relatorios():
         self.clt.drawString(150, 660, self.telefoneRel )
         self.clt.drawString(150, 640, self.moradaRel )
 
+#linha
+        self.clt.rect(20, 600, 550, 1, fill=False, stroke=True)
+
+
         self.clt.showPage()
         self.clt.save()
         self.printCliente()
+
 
 class funcs():
     def limpar_dados_ecra(self):
@@ -137,11 +141,13 @@ class funcs():
 
         self.nome_entry.insert(END, "%")
         nome = self.nome_entry.get()
-        self.cursor.execute(""" SELECT cod, nome_clt, telefone_clt, morada_clt FROM clientes WHERE nome_clt LIKE "%"  ORDER BY nome_clt ASC """ % nome)
-        for i in self.cursor.fetchall():
+        self.cursor.execute("""SELECT cod, nome_clt, telefone_clt, morada_clt FROM clientes WHERE nome_clt LIKE "%s" ORDER BY nome_clt ASC """ % nome)
+        procurarnomeclt = self.cursor.fetchall()
+        for i in procurarnomeclt:
             self.listaclt.insert("", END, values=i)
-        self.desliga_bd()
+
         self.limpar_dados_ecra()
+        self.desliga_bd()
         
 class application(funcs, Relatorios):
     def __init__(self):
@@ -171,16 +177,12 @@ class application(funcs, Relatorios):
         self.frame_baixo.place(relx=0.02, rely=0.50, relwidth=0.96, relheight=0.46)
         
     def windgets_frame_cima(self):
-        # canvas
-        self.canvas_bt = Canvas(self.frame_cima, bd=0, bg="black", highlightbackground="green", highlightthickness=3)
-        self.canvas_bt.place(relx=0.15, rely=0.08, relwidth=0.5, relheight=0.19)
-
         #botao limpar    
         self.bt_limpar = Button(self.frame_cima, text="Limpar", bd=3, width=10, height=2, bg="#87CEFA", fg="black", font="Arial 10 bold", command=self.limpar_dados_ecra)
         self.bt_limpar.place(relx=0.2, rely=0.1, relwidth=0.1, relheight=0.15)
-
+        
         #botao procurar    
-        self.bt_procurar = Button(self.frame_cima, text="Procurar", bd=3, width=10, height=2, bg="#87CEFA", fg="black", font="Arial 10 bold",command=self.procurar_cliente)
+        self.bt_procurar = Button(self.frame_cima, text="Procurar", bd=3, width=10, height=2, bg="#87CEFA", fg="black", font="Arial 10 bold", command=self.procurar_cliente)
         self.bt_procurar.place(relx=0.32, rely=0.1, relwidth=0.1, relheight=0.15)    
         
         #botao novo    
@@ -246,8 +248,7 @@ class application(funcs, Relatorios):
         self.listaclt.bind("<Double-1>", self.OnDoubleClick)
 
     def Menus(self):
-        menubar = Menu(self.tela)
-        self.tela.config(menu=menubar)
+        menubar = Menu(janela)
         
         filemenu = Menu(menubar)
         filemenu2 = Menu(menubar)
@@ -260,14 +261,18 @@ class application(funcs, Relatorios):
         filemenu.add_command(label="Novo")
         filemenu.add_command(label="Abrir")
         filemenu.add_command(label="Salvar")
-        filemenu.add_command(label="Apagar Cliente", command=self.apagar_cliente)
         filemenu.add_command(label="Sair", command=Quit)
-
+        filemenu.add_command(label="Apagar Cliente", command=self.apagar_cliente)
 
         filemenu2.add_command(label="Ficha do cliente", command=self.gerar_relatorioCliente)
-
-        
         janela.config(menu=menubar)
+
+
+
+
+
+
+
 
 application()
 
